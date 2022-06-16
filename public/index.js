@@ -17,6 +17,7 @@ function whichBtnGoTClicked(e){
 
 }
 
+var spotSize = 35;
 class Spot{
     constructor(row, column, state="normal"){
         this.row = row;
@@ -24,6 +25,7 @@ class Spot{
         this.state = state;
         this.visited = false;
         this.cameFrom = null;
+        this.distance = Infinity; // thats for dijastra 
 
     }
 }
@@ -79,10 +81,6 @@ class Grid{
             tempBoard.push([])
             for(var j = 0; j < this.width; j++){
                 tempBoard[i].push(new Spot(i, j))
-
-                
-                
-
             }
 
         }
@@ -361,11 +359,6 @@ function getSpotDiv(spot){
         column = spot.column
 
         return document.querySelector(".row-index-" + row).childNodes[spot.column]
-
-
-            
-        
-
 }
 
 function startDFS(){
@@ -378,9 +371,6 @@ function startDFS(){
     var queue = [grid.startDiv]
 
     while(!foundEnd && queue.length){
-
-
-
 
         const directions = [
                 [0, 1],
@@ -418,14 +408,9 @@ function startDFS(){
                     break;
                 }
 
-
             }
         
-        
             }
-
-
-        
 
         }
 
@@ -467,11 +452,8 @@ function startDFS(){
 }, timeItsGoingToTake)
 
 algorithmStarted = false;
-
-
-
-
 }
+
 
 
 
@@ -482,14 +464,9 @@ function startBFS(){
     var foundEnd = false;
 
     var visitedPath = []
-    console.log("start" + grid.startDiv.revers)
     var queue = [grid.startDiv]
 
     while(!foundEnd && queue.length){
-
-
-
-
         const directions = [
                 [0, 1],
                 [1, 0],
@@ -577,8 +554,6 @@ function startBFS(){
 algorithmStarted = false;
 
 
-
-
 }
 
 function resetPath(){
@@ -596,11 +571,11 @@ document.addEventListener('contextmenu', function(e) {
     }, false);
 
 
+console.log($(window).width())
+var gridWidth = Math.floor($(window).width() / (spotSize+10));
+var gridHeight = Math.floor($(window).height() / (spotSize+10));
 
-var gridWidth = 60;
-var gridHeight = 23;
-
-
+console.log(gridWidth)
 var grid = new Grid(gridWidth, gridHeight);
  grid.createGrid()
 
@@ -631,7 +606,7 @@ var  pages = {
 
     3: {
         title: "How to use this website.",
-        desc1: "In order to start using this website, we will go through a quick explanation of to use the website.",
+        desc1: "In order to start using this website, we will go through a quick explanation of how to use the website.",
         desc2: 'Now, on each page, I will be explaining you every thing you need to know one by one'
     },
 
@@ -639,23 +614,20 @@ var  pages = {
         title: "The Wall Block",
         desc1: 'The wall block is a way to say to the algorithm "please avoid any of these blocks, and do not consider them as the path."',
         desc2: 'In order to place the wall block, please click on one of the blank spots.',
-        img: "wall-block.png"
 
     },
 
     5: {
         title: "The Start",
         desc1: 'In order to start the algorithm, the algorithm needs to know where the path should start at.',
-        desc2: 'In order to place the start, please please hold the CTRL key and click on one of the blank spots.',
-        img: "start-block.png"
+        desc2: 'In order to place the start, please hold the CTRL key and click on one of the blank spots.',
 
     },
 
     6: {
         title: "The End",
         desc1: 'In order to start the algorithm, the algorithm needs to know where the path should end at.',
-        desc2: 'In order to place the end, please please hold the ALT key and click on one of the blank spots.',
-        img: "end-block.png"
+        desc2: 'In order to place the end, please  hold the ALT key and click on one of the blank spots.',
 
     },
 
@@ -669,8 +641,7 @@ var  pages = {
     8: {
         title: "Starting the algorithm",
         desc1: "",
-        desc2: 'In order to start the algorithm, click on the green Start button, and them choose what algorithm you want to use.',
-        img: "start-btn.png"
+        desc2: 'In order to start the algorithm, click on the green Start button, and then choose what algorithm you want to use.',
     },
 }
 
@@ -698,8 +669,6 @@ const maxPages = 8;
 
  function nextTab(){
      if(pageCounter < maxPages){
-
-     
      pageCounter++;
      }else{
          SkipTutorial();
@@ -714,6 +683,13 @@ const maxPages = 8;
      updateTutorial();
  }
  
+ function startTutorial(){
+    skippedTutorial = false;
+    tutorialDiv.hidden = false;
+    document.querySelector(".dropdown-toggle").hidden = true;
+    pageCounter = 1;
+    updateTutorial();
+ }
  function SkipTutorial(){
     skippedTutorial = true;
     tutorialDiv.hidden = true;
