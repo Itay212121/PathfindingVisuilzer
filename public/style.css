@@ -4,6 +4,12 @@ body{
 
 }
 
+@media (max-width: 767px) {
+    .title {
+        display:none;
+    }
+}
+
 .title {
     font-family: 'Roboto', sans-serif;
     color:  #C5FFFD;

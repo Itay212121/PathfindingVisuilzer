@@ -1,7 +1,6 @@
 
 var pathDelay = 10;
 var IsHolding = false;
-var skippedTutorial = false;
 
 
 
@@ -138,7 +137,6 @@ class Grid{
                         
 
                         if(grid.algorithmStarted) return;
-                        if(!skippedTutorial) return;
 
                         
 
@@ -222,7 +220,6 @@ class Grid{
                     spotDiv.addEventListener("mouseover", function(event) {
 
                         if(grid.algorithmStarted) return;
-                        if(!skippedTutorial) return;
 
                         
 
@@ -651,7 +648,6 @@ const maxPages = 8;
  function updateTutorial(){
      
     var [_ , title, __, desc, ___,  desc2, ____, count, ____, img, __________, _____, ______, _______, ________, _________] = tutorialDiv.childNodes;
-    console.log(tutorialDiv.childNodes, pageCounter)
 
     title.innerHTML = pages[pageCounter].title;
 
@@ -684,20 +680,17 @@ const maxPages = 8;
  }
  
  function startTutorial(){
-    skippedTutorial = false;
     tutorialDiv.hidden = false;
     document.querySelector(".dropdown-toggle").hidden = true;
     pageCounter = 1;
     updateTutorial();
  }
  function SkipTutorial(){
-    skippedTutorial = true;
     tutorialDiv.hidden = true;
     document.querySelector(".dropdown-toggle").hidden = false;
  
  }
 
- updateTutorial();
  
  
      
